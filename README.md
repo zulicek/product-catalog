@@ -91,5 +91,5 @@ npm run cypress
 ```
 Run tests with:
 ```
-npm test:e2e
+npm run test:e2e
 ```
