@@ -62,7 +62,7 @@ export const getAuthUser = createAsyncThunk(
       try {
         const userData = await authService.getAuthUser();
         return userData;
-      } catch (error) {
+      } catch {
         authService.removeUserDataFromLocalStorage();
         return rejectWithValue("Failed to get user info");
       }
@@ -93,7 +93,7 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(login.rejected, (state) => {
         state.status = "failed";
         state.error = "Invalid username or password";
       })
@@ -112,7 +112,7 @@ const authSlice = createSlice({
           id: action.payload.id,
         };
       })
-      .addCase(getAuthUser.rejected, (state, action) => {
+      .addCase(getAuthUser.rejected, (state) => {
         state.status = "failed";
         state.user = null;
         state.accessToken = null;
