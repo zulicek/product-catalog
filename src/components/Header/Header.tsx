@@ -31,6 +31,8 @@ export default function Header() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const [isClient, setIsClient] = useState(false);
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(login({ username, password }));
@@ -46,6 +48,10 @@ export default function Header() {
     refreshTokenIfNeeded();
   }, [refreshTokenIfNeeded]);
 
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <header className="bg-secondary shadow-md">
       <div className="container mx-auto px-4 py-2 flex justify-between">
@@ -58,7 +64,9 @@ export default function Header() {
         <div className="flex items-center">
           {user ? (
             <>
-              <label data-testid="user-greeting" className="text-white">Welcome, {user.username}</label>
+              <label data-testid="user-greeting" className="text-white">
+                Welcome, {user.username}
+              </label>
               <button
                 onClick={() => dispatch(logout())}
                 className="text-primary px-4 py-2 rounded hover:text-white"
@@ -82,7 +90,7 @@ export default function Header() {
             className="text-white px-2 py-2 relative hover:text-zinc-100"
           >
             <ShoppingCartOutlined style={{ fontSize: "1.5rem" }} />
-            {cartItems.length > 0 && (
+            {isClient && cartItems.length > 0 && (
               <span
                 data-testid="cart-count"
                 className="absolute top-0 right-0 text-xs font-bold bg-primary rounded-full text-white w-3.5 h-3.5"

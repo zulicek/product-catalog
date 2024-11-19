@@ -1,5 +1,5 @@
+"use client";
 
-'use client'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../store/store'
@@ -30,7 +30,7 @@ export default function Cart({ onClose }: CartProps) {
           ) : (
             <>
               {cartItems.map(item => (
-                <div key={item.id} className="flex justify-between items-center mb-4">
+                <div key={item.id} className="flex justify-between items-center mb-4 space-x-4">
                   <div>
                     <h3 className="font-semibold">{item.title}</h3>
                     <p>${item.price.toFixed(2)} x {item.quantity}</p>
@@ -51,9 +51,9 @@ export default function Cart({ onClose }: CartProps) {
                     </button>
                     <button
                       onClick={() => dispatch(removeFromCart(item.id))}
-                      className="bg-primary text-white px-2 py-1 rounded"
+                      className="bg-primary text-white px-1 rounded"
                     >
-                      Remove
+                      <CloseOutlined className="text-sm" />
                     </button>
                   </div>
                 </div>

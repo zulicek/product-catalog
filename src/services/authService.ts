@@ -1,6 +1,9 @@
 import api from './api';
 import { isBrowser } from '../../lib/utils';
 
+const ACCESS_TOKEN_STORAGE_KEY = 'accessToken';
+const REFRESH_TOKEN_STORAGE_KEY = 'refreshToken';
+
 export const login = async (username: string, password: string) => {
   const response = await api.post('/auth/login', { username, password });
   return response.data;
@@ -20,16 +23,16 @@ export const refreshAuthToken = async (token: string) => {
 };
 
 export const saveUserDataToLocalStorage = (accesToken: string, refreshToken: string) => {
-    localStorage.setItem('accessToken', accesToken);
-    localStorage.setItem('refreshToken', refreshToken);
+    localStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, accesToken);
+    localStorage.setItem(REFRESH_TOKEN_STORAGE_KEY, refreshToken);
 };
 
 
 export const loadUserDataFromLocalStorage = () => {
   if (isBrowser()) {
     return {
-      accessToken: localStorage.getItem('accessToken'),
-      refreshToken: localStorage.getItem('refreshToken'),
+      accessToken: localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY),
+      refreshToken: localStorage.getItem(REFRESH_TOKEN_STORAGE_KEY),
     };
   }
   return {
@@ -40,8 +43,8 @@ export const loadUserDataFromLocalStorage = () => {
 
 export const removeUserDataFromLocalStorage = () => {
   if (isBrowser()) {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_STORAGE_KEY);
   }
 };
 
